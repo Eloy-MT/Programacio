@@ -1,1 +1,20 @@
 
+import java.util.*;
+import java.time.*;
+
+/**
+ * Classe base Producte que representa un producte genèric amb nom, preu i codi de barres.
+ */
+abstract class Producte {
+    protected String nom;
+    protected double preu;
+    protected String codiBarres;
+
+    public Producte(String nom, double preu, String codiBarres) {
+        this.nom = nom;
+        this.preu = preu;
+        this.codiBarres = codiBarres;
+    }
+
+    public abstract double calcularPreu();
+}
