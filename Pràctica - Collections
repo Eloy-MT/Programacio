@@ -1,1 +1,38 @@
 
+import java.util.*;
+import java.time.*;
+
+/**
+ * Classe base Producte que representa un producte genèric amb nom, preu i codi de barres.
+ */
+abstract class Producte {
+    protected String nom;
+    protected double preu;
+    protected String codiBarres;
+
+    public Producte(String nom, double preu, String codiBarres) {
+        this.nom = nom;
+        this.preu = preu;
+        this.codiBarres = codiBarres;
+    }
+
+    public abstract double calcularPreu();
+}
+
+/**
+ * Classe Alimentacio que representa un producte d'alimentació amb data de caducitat.
+ */
+class Alimentacio extends Producte {
+    private LocalDate dataCaducitat;
+
+    public Alimentacio(String nom, double preu, String codiBarres, String dataCaducitat) {
+        super(nom, preu, codiBarres);
+        this.dataCaducitat = LocalDate.parse(dataCaducitat);
+    }
+
+    @Override
+    public double calcularPreu() {
+        long diesRestants = ChronoUnit.DAYS.between(LocalDate.now(), dataCaducitat);
+        return preu - preu * (1.0 / (diesRestants + 1)) + (preu * 0.1);
+    }
+}
