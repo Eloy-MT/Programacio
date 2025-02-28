@@ -18,3 +18,21 @@ abstract class Producte {
 
     public abstract double calcularPreu();
 }
+
+/**
+ * Classe Alimentacio que representa un producte d'alimentació amb data de caducitat.
+ */
+class Alimentacio extends Producte {
+    private LocalDate dataCaducitat;
+
+    public Alimentacio(String nom, double preu, String codiBarres, String dataCaducitat) {
+        super(nom, preu, codiBarres);
+        this.dataCaducitat = LocalDate.parse(dataCaducitat);
+    }
+
+    @Override
+    public double calcularPreu() {
+        long diesRestants = ChronoUnit.DAYS.between(LocalDate.now(), dataCaducitat);
+        return preu - preu * (1.0 / (diesRestants + 1)) + (preu * 0.1);
+    }
+}
